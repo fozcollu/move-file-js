@@ -11,7 +11,11 @@ type File = {
  * @param destinationFolderId destination folder id
  * @returns updated list
  */
-export default function move(list: File[], source: string, destination: string): File[] {
+export default function move(
+  list: File[],
+  sourceFileId: string,
+  destinationFolderId: string,
+): File[] {
   let sourceFile: File | undefined;
   let destinationFolder: File | undefined;
 
@@ -24,13 +28,13 @@ export default function move(list: File[], source: string, destination: string):
   function travelListForFindSourceAndDestination(subMenuItems: File[]): void {
     for (let i = 0; i < subMenuItems.length; i += 1) {
       const file = subMenuItems[i];
-      if (file.id === source) {
+      if (file.id === sourceFileId) {
         if (file.files) {
           throw new Error('You cannot move a folder');
         }
         sourceFile = file;
         subMenuItems.splice(i, 1);
-      } else if (file.id === destination) {
+      } else if (file.id === destinationFolderId) {
         if (!file.files) {
           throw new Error('You cannot specify a file as the destination');
         }
